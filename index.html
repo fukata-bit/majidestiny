@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>真・運命 ミニバス診断 | チーム鈴谷</title>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16213e;--paper:#fffaf2;--card:#ffffff;--orange:#f2681c;--sun:#ffc93c;--line:#16213e;--soft:#ffe8cf;--muted:#55607a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--ink:#fff3e3;--paper:#10162b;--card:#1a2340;--line:#fff3e3;--soft:#2a2f4d;--muted:#b6bdd6}}
+:root[data-theme="dark"]{--ink:#fff3e3;--paper:#10162b;--card:#1a2340;--line:#fff3e3;--soft:#2a2f4d;--muted:#b6bdd6}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;font-weight:500;line-height:1.8;font-size:16px}
+.wrap{max-width:640px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:"Dela Gothic One","Hiragino Sans","Yu Gothic",sans-serif;font-weight:400;line-height:1.35;margin:0}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+
+/* hero */
+.hero{background:var(--orange);color:#16213e;text-align:center;padding:56px 0 64px;position:relative;overflow:hidden;border-bottom:4px solid #16213e}
+.hero::before{content:"";position:absolute;left:50%;top:50%;width:520px;height:520px;max-width:140vw;border:4px solid rgba(22,33,62,.18);border-radius:50%;transform:translate(-50%,-50%)}
+.hero::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:4px solid rgba(22,33,62,.18)}
+.hero .wrap{position:relative;z-index:1}
+.sub{font-weight:900;font-size:15px;margin:0 0 6px}
+.hero h1{font-size:clamp(46px,15vw,84px);letter-spacing:.02em;line-height:1.15;text-shadow:3px 3px 0 var(--sun)}
+.ruby{display:block;font-weight:900;font-size:15px;letter-spacing:.3em;margin:6px 0 4px}
+.hero h2{font-size:clamp(22px,6vw,30px);margin:10px 0 18px}
+.lead{margin:0 auto 28px;max-width:30em;font-weight:700}
+.btn{display:inline-block;background:#16213e;color:#fff;border:0;border-radius:999px;padding:16px 36px;font-weight:900;font-size:18px;text-decoration:none;box-shadow:0 5px 0 #0a1020;transition:transform .1s,box-shadow .1s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #0a1020}
+.btn.alt{background:var(--sun);color:#16213e;box-shadow:0 5px 0 #b98a00}
+
+/* quiz */
+section{padding:44px 0}
+#quiz{display:none}
+.bar{height:12px;background:var(--soft);border:2px solid var(--line);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;width:0;background:var(--orange);transition:width .35s}
+.count{font-weight:900;font-size:14px;color:var(--muted);margin:0 0 20px;text-align:right}
+.q{font-size:clamp(20px,5.5vw,26px);margin-bottom:6px}
+.qs{color:var(--muted);margin:0 0 18px;font-size:14px}
+.opts{display:grid;gap:12px;padding:0;margin:0;list-style:none}
+.opt{width:100%;text-align:left;background:var(--card);border:3px solid var(--line);border-radius:16px;padding:14px 18px;font-weight:700;box-shadow:0 4px 0 var(--line);transition:transform .1s,box-shadow .1s,background .15s}
+.opt:hover{background:var(--soft)}
+.opt:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+
+/* loading */
+#load{display:none;text-align:center;padding:90px 0}
+#load p{font-family:"Dela Gothic One",sans-serif;font-size:22px;margin:0 0 20px}
+.ball{width:56px;height:56px;margin:0 auto;border-radius:50%;background:var(--orange);border:3px solid var(--line);position:relative;animation:bounce .55s ease-in-out infinite alternate}
+.ball::before{content:"";position:absolute;left:50%;top:0;bottom:0;border-left:3px solid var(--line)}
+.ball::after{content:"";position:absolute;top:50%;left:0;right:0;border-top:3px solid var(--line)}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-34px)}}
+
+/* result */
+#result{display:none}
+.res{background:var(--card);border:4px solid var(--line);border-radius:24px;padding:28px 22px;text-align:center;box-shadow:0 7px 0 var(--line)}
+.tag{display:inline-block;background:var(--sun);color:#16213e;font-weight:900;border-radius:99px;padding:2px 16px;font-size:14px}
+.res h2{font-size:clamp(24px,7vw,34px);margin:12px 0 12px}
+.res p{margin:0 0 10px;text-align:left}
+.twist{margin-top:18px;background:var(--orange);color:#16213e;border-radius:16px;padding:16px 18px;font-weight:900;text-align:center;line-height:1.6}
+.twist b{font-family:"Dela Gothic One",sans-serif;font-weight:400;font-size:1.25em;display:block}
+.row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+.link{background:none;border:0;text-decoration:underline;font-weight:700;color:var(--muted);padding:8px}
+
+/* team */
+#team{background:var(--soft);border-top:4px solid var(--line)}
+#team h2{font-size:clamp(24px,7vw,32px);margin-bottom:10px}
+.hist{margin:0 0 22px}
+.feat{display:grid;gap:10px;padding:0;margin:0 0 26px;list-style:none}
+.feat li{background:var(--card);border:3px solid var(--line);border-radius:14px;padding:12px 16px;font-weight:700;display:flex;gap:12px;align-items:flex-start}
+.feat li::before{content:"";flex:0 0 14px;height:14px;margin-top:8px;border-radius:50%;background:var(--orange);border:2px solid var(--line)}
+.join{background:#16213e;color:#fff;border-radius:24px;padding:28px 22px;text-align:center}
+.join h3{font-size:clamp(20px,6vw,26px);margin-bottom:10px;color:var(--sun)}
+.join p{margin:0 0 18px}
+footer{text-align:center;padding:26px 20px 40px;font-size:13px;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="sub">チーム鈴谷 presents</p>
+    <h1>真・運命</h1>
+    <span class="ruby">マ ジ ・ デ ス テ ィ ニ ー</span>
+    <h2>ミニバス診断</h2>
+    <p class="lead">5つの質問に答えるだけ。キミのバスケタイプと、キミが進むべき「運命のチーム」がわかる。</p>
+    <button class="btn" id="start">運命を診断する</button>
+  </div>
+</header>
+
+<main>
+<section id="quiz" aria-live="polite"><div class="wrap">
+  <div class="bar"><i id="fill"></i></div>
+  <p class="count" id="count"></p>
+  <h2 class="q" id="qt"></h2>
+  <p class="qs" id="qs"></p>
+  <ul class="opts" id="opts"></ul>
+</div></section>
+
+<section id="load"><div class="wrap">
+  <p>運命を読み込み中…</p>
+  <div class="ball"></div>
+</div></section>
+
+<section id="result"><div class="wrap">
+  <div class="res">
+    <span class="tag" id="rtag"></span>
+    <h2 id="rname"></h2>
+    <p id="rdesc"></p>
+    <p id="rfit"></p>
+    <div class="twist"><span>診断の結果、キミの運命は…</span><b>チーム鈴谷！！</b></div>
+  </div>
+  <div class="row">
+    <a class="btn alt" href="#team">チーム鈴谷を見る</a>
+    <button class="link" id="retry">もう一度診断する</button>
+  </div>
+  <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:14px">※何度やり直しても、運命は変わりません。</p>
+</div></section>
+
+<section id="team"><div class="wrap">
+  <h2>チーム鈴谷って、どんなチーム？</h2>
+  <p class="hist">鈴谷小学校を中心に活動する男子ミニバスチームです。1972年に与野南スポーツ少年団として活動を始め、2016年から男子ミニバスの「チーム鈴谷」として新しく歩みはじめました。目標は「楽しく」。子どもたちがのびのびバスケットボールにチャレンジできるチームを目指しています。</p>
+  <ul class="feat">
+    <li>年齢を超えて、みんな仲良し</li>
+    <li>上手な子も初めての子も、おたがいを応援し合える仲間です</li>
+    <li>保護者のみなさんも仲良しで、和やかな雰囲気です</li>
+    <li>穏やかでのんびり、みんなが自分らしく過ごせます</li>
+    <li>バスケ以外のイベントもあります</li>
+    <li>監督はとっても優しい、おじいちゃんのような存在</li>
+    <li>コーチも熱心で優しい</li>
+  </ul>
+  <div class="join">
+    <h3>いっしょにバスケ、始めませんか？</h3>
+    <p>経験は問いません。まずはホームページとインスタで、チームの様子をのぞいてみてください。</p>
+    <div class="row" style="margin-top:0">
+      <a class="btn alt" href="https://teamsuzuyaweb.wixsite.com/my-site" target="_blank" rel="noopener">ホームページを見る</a>
+      <a class="btn alt" href="https://www.instagram.com/team.suzuya.mini?igsh=OXdqNDUyMGZhcHIs" target="_blank" rel="noopener">Instagramを見る</a>
+    </div>
+  </div>
+</div></section>
+</main>
+<footer>チーム鈴谷（鈴谷小学校 男子ミニバス）</footer>
+
+<script>
+var Q=[
+{t:"休み時間、いちばんやりがちなことは？",o:[["校庭を全力で走り回る","A"],["みんなを笑わせて盛り上げる","B"],["ひとりでコツコツ何かを練習する","C"],["のんびりおしゃべりや日なた ぼっこ","D"]]},
+{t:"ミスをしちゃった！そのとき、どうする？",o:[["次は取り返す！とすぐ切りかえる","A"],["「ごめーん！」と笑ってごまかす","B"],["どうして失敗したか、あとで考える","C"],["まあいっか、と気にしない","D"]]},
+{t:"いっしょにいたい仲間は、どんな人？",o:[["いっしょに全力で走ってくれる人","A"],["いつも明るくて元気な人","B"],["がんばりを見ていてくれる人","C"],["やさしくて、安心できる人","D"]]},
+{t:"理想の休日は？",o:[["体を思いきり動かして遊ぶ","A"],["友だちや家族とワイワイ出かける","B"],["好きなことをじっくりやりこむ","C"],["家でごろごろ、ゆっくり過ごす","D"]]},
+{t:"最後の質問。大人になったら、どんな人になりたい？",o:[["いちばん輝くヒーロー","A"],["みんなの人気者","B"],["努力でつかむ職人","C"],["みんなをほっとさせる人","D"]]}
+];
+var R={
+A:{tag:"運命タイプ1",n:"ダッシュ全開！エネルギーおばけ型",d:"体を動かすのが大好きで、じっとしているのが苦手。走る、跳ぶ、追いかける。そのパワーは、コートの上でこそ輝きます。",f:"鈴谷は、みんながのびのびできるチーム。思いきり走って、思いきりチャレンジできます。"},
+B:{tag:"運命タイプ2",n:"みんなを笑顔にする！ムードメーカー型",d:"キミがいるだけで、その場がパッと明るくなる。チームに必要な、いちばん大事な才能を持っています。",f:"鈴谷は年齢を超えて仲良し。イベントもあるから、バスケ以外でも仲間とたっぷり楽しめます。"},
+C:{tag:"運命タイプ3",n:"コツコツ育つ！じっくり成長型",d:"最初から完璧じゃなくていい。ちょっとずつ積み重ねて、気づいたらぐんと伸びているタイプです。",f:"鈴谷のコーチは熱心で優しい。ひとりひとりのがんばりを、ちゃんと見てくれます。"},
+D:{tag:"運命タイプ4",n:"マイペースが武器！のんびり安心型",d:"あわてず、あせらず、自分のペースで。まわりをふんわりさせるキミの空気は、実はチームの宝物です。",f:"鈴谷は、穏やかでのんびりした空気のチーム。監督もおじいちゃんのように優しいから、安心です。"}
+};
+var $=function(i){return document.getElementById(i)};
+var step=0,score;
+function show(id){["quiz","load","result"].forEach(function(x){$(x).style.display=x===id?"block":"none"})}
+function scrollTo0(el){try{el.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){el.scrollIntoView()}}
+function render(){
+  var q=Q[step];
+  $("count").textContent=(step+1)+" / "+Q.length;
+  $("fill").style.width=(step/Q.length*100)+"%";
+  $("qt").textContent="Q"+(step+1)+". "+q.t;
+  $("qs").textContent="いちばん近いものを選んでね";
+  var ul=$("opts");ul.innerHTML="";
+  q.o.forEach(function(o){
+    var li=document.createElement("li"),b=document.createElement("button");
+    b.className="opt";b.type="button";b.textContent=o[0].replace(/ /g,"");
+    b.onclick=function(){answer(o[1])};
+    li.appendChild(b);ul.appendChild(li);
+  });
+}
+function answer(k){
+  score[k]++;step++;
+  if(step<Q.length){render();return}
+  $("fill").style.width="100%";
+  show("load");scrollTo0($("load"));
+  setTimeout(finish,1500);
+}
+function finish(){
+  var best="A";
+  ["A","B","C","D"].forEach(function(k){if(score[k]>score[best])best=k});
+  var r=R[best];
+  $("rtag").textContent=r.tag;$("rname").textContent=r.n;$("rdesc").textContent=r.d;$("rfit").textContent=r.f;
+  show("result");scrollTo0($("result"));
+}
+function begin(){step=0;score={A:0,B:0,C:0,D:0};show("quiz");render();scrollTo0($("quiz"))}
+$("start").onclick=begin;
+$("retry").onclick=begin;
+</script>
+</body>
+</html>
